@@ -1,0 +1,29 @@
+<!-- ===================================================================== -->
+<!-- Windows Endpoint Security Monitoring Rules (Sysmon & Wazuh)           -->
+<!-- Author: Jerick Andrew (J3rick4ndrew)                                  -->
+<!-- Environment: Wazuh v4.14.8 / Windows Server 2022 / Sysmon v15.22      -->
+<!-- ===================================================================== -->
+
+<group name="windows,sysmon,lotl_defense,">
+
+  <!-- Rule 100070: Endpoint Monitoring - Outbound Network Connection (Sysmon Event ID 3) -->
+  <rule id="100070" level="6">
+    <if_group>sysmon_eid3_detections</if_group>
+    <description>Endpoint Network Monitoring: Outbound connection by $(win.eventdata.image) to $(win.eventdata.destinationIp):$(win.eventdata.destinationPort) (MITRE T1071)</description>
+    <mitre>
+      <id>T1071</id>
+    </mitre>
+  </rule>
+
+  <!-- Rule 100071: Endpoint Monitoring - Local System & Account Discovery (Sysmon Event ID 1) -->
+  <rule id="100071" level="7">
+    <if_sid>100002</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\(whoami|net|net1|systeminfo|ipconfig|sc)\.exe$</field>
+    <description>Endpoint Process Monitoring: System/Account discovery executed via $(win.eventdata.image) (MITRE T1033 / T1082)</description>
+    <mitre>
+      <id>T1033</id>
+      <id>T1082</id>
+    </mitre>
+  </rule>
+
+</group>
