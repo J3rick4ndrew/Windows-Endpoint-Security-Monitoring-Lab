@@ -203,3 +203,6 @@ Windows-Endpoint-Security-Monitoring-Lab/
 ├── LICENSE
 └── README.md
 ```
+
+## 👤 Author
+**Jerick Andrew S**  
